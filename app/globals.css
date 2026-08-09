@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Molina dark theme — fixed (CRM is always dark) */
+    --background: 220 28% 6%; /* #0b0f17 */
+    --foreground: 40 33% 96%; /* near #faf7f2 */
+
+    --card: 220 28% 10%; /* #121824 */
+    --card-foreground: 40 33% 96%;
+
+    --popover: 220 28% 10%;
+    --popover-foreground: 40 33% 96%;
+
+    --primary: 43 63% 52%; /* #d4af37 */
+    --primary-foreground: 220 28% 6%;
+
+    --secondary: 220 24% 14%; /* #161c28 */
+    --secondary-foreground: 40 33% 96%;
+
+    --muted: 220 24% 14%;
+    --muted-foreground: 215 12% 58%;
+
+    --accent: 220 22% 15%; /* #182030 */
+    --accent-foreground: 40 33% 96%;
+
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 40 33% 96%;
+
+    --border: 220 18% 18%;
+    --input: 220 18% 18%;
+    --ring: 43 63% 52%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: #0b0f17;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #ffe89c, #d4af37 40%, #e6c687, #9a7b1c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-gold {
+    color: #0b0f17;
+    background: linear-gradient(135deg, #d4af37, #c5a059, #a68032);
+    font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+  }
+
+  .btn-gold:hover {
+    background: linear-gradient(135deg, #e6c687, #d4af37, #c5a059);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+  }
+
+  .gold-border-subtle {
+    border: 1px solid rgba(212, 175, 55, 0.22);
+  }
+}
