@@ -1,5 +1,9 @@
+# Next.js Runtime (@netlify/plugin-nextjs) expects publish = ".next".
+# Leaving publish empty makes Netlify use the repo root and fails with:
+# "Your publish directory cannot be the same as the base directory of your site."
 [build]
   command = "npm run build"
+  publish = ".next"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
