@@ -2,29 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Kanban,
-  Building2,
-  Users,
-  Wallet,
-  type LucideIcon,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type NavItem = {
-  href: string;
-  label: string;
-  icon: LucideIcon;
-};
-
-const NAV: NavItem[] = [
-  { href: "/", label: "Visão", icon: LayoutDashboard },
-  { href: "/pipeline", label: "Pipeline", icon: Kanban },
-  { href: "/leads", label: "Clientes", icon: Users },
-  { href: "/empreendimentos", label: "Lançamentos", icon: Building2 },
-  { href: "/financeiro", label: "Financeiro", icon: Wallet },
-];
+import { NAV_ITEMS } from "@/components/layout/nav-items";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -35,7 +14,7 @@ export function BottomNav() {
       aria-label="Navegação principal"
     >
       <ul className="mx-auto flex h-16 max-w-lg items-stretch justify-between px-1">
-        {NAV.map((item) => {
+        {NAV_ITEMS.map((item) => {
           const active =
             pathname === item.href ||
             (item.href !== "/" && pathname.startsWith(item.href));

@@ -153,13 +153,13 @@ export function PipelineBoard({
   return (
     <>
       {/* Mobile: one stage at a time */}
-      <div className="flex h-full flex-col gap-3 lg:hidden">
+      <div className="flex h-full min-w-0 flex-col gap-3 lg:hidden">
         <Button variant="gold" className="h-11 w-full shrink-0" onClick={openCreate}>
           <Plus className="h-4 w-4" />
           Novo lead
         </Button>
 
-        <div className="-mx-1 flex shrink-0 gap-1.5 overflow-x-auto px-1 pb-1">
+        <div className="-mx-1 flex min-w-0 shrink-0 gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {FUNNEL_STAGES.map((stage) => {
             const count = leadsByStage(stage.id).length;
             const active = stage.id === mobileStage;
@@ -182,10 +182,10 @@ export function PipelineBoard({
           })}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col rounded-lg border border-border/40 bg-surface/40">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col rounded-lg border border-border/40 bg-surface/40">
           <div className="flex items-center justify-between border-b border-border/40 px-3 py-3">
-            <div>
-              <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+            <div className="min-w-0">
+              <p className="truncate text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 {mobileStageMeta.label}
               </p>
               <p className="text-xs text-muted-foreground">
@@ -193,11 +193,11 @@ export function PipelineBoard({
                 {mobileLeads.length === 1 ? "lead" : "leads"}
               </p>
             </div>
-            <span className="rounded-full bg-background/60 px-2.5 py-1 text-xs tabular-nums text-gold-light">
+            <span className="shrink-0 rounded-full bg-background/60 px-2.5 py-1 text-xs tabular-nums text-gold-light">
               {formatCurrency(mobileBudget || null)}
             </span>
           </div>
-          <div className="flex-1 space-y-2 overflow-y-auto p-3">
+          <div className="min-w-0 flex-1 space-y-2 overflow-y-auto p-3">
             {mobileLeads.map((lead) => (
               <LeadCard
                 key={lead.id}

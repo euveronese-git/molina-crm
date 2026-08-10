@@ -386,7 +386,7 @@ function FinanceiroContent({
             : "Comissões · despesas · fluxo de caixa"
         }
       />
-      <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+      <main className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-6">
         <div className="mb-6 flex gap-1 rounded-lg border border-border/50 bg-surface/40 p-1">
           {tabs.map((t) => (
             <button
@@ -569,7 +569,7 @@ function FinanceiroContent({
               <select
                 value={filterCat}
                 onChange={(e) => setFilterCat(e.target.value)}
-                className="h-9 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
+                className="h-9 max-w-full min-w-0 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
               >
                 <option value="all">Todas categorias</option>
                 {allCategories.map((c) => (
@@ -583,19 +583,100 @@ function FinanceiroContent({
                 onChange={(e) =>
                   setFilterStatus(e.target.value as DespesaStatus | "all")
                 }
-                className="h-9 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
+                className="h-9 max-w-full min-w-0 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
               >
                 <option value="all">Todos status</option>
                 <option value="previsto">A pagar</option>
                 <option value="pago">Pago</option>
               </select>
-              <Button variant="gold" className="ml-auto" onClick={openNewDespesa}>
+              <Button
+                variant="gold"
+                className="w-full sm:ml-auto sm:w-auto"
+                onClick={openNewDespesa}
+              >
                 <Plus className="h-4 w-4" />
                 Nova despesa
               </Button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-border/50">
+            {/* Mobile cards */}
+            <div className="space-y-2 md:hidden">
+              {filteredDespesas.map((d) => (
+                <div
+                  key={d.id}
+                  className="rounded-lg border border-border/50 bg-card/40 p-3"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium">{d.descricao}</p>
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                        <Badge variant="outline">
+                          {categoriaLabel(d.categoria)}
+                        </Badge>
+                        {d.recorrente ? (
+                          <Badge variant="outline">Recorrente</Badge>
+                        ) : null}
+                        {d.fornecedor ? (
+                          <span className="text-[11px] text-muted-foreground">
+                            {d.fornecedor}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+                    <Badge
+                      variant={d.status === "pago" ? "gold" : "warning"}
+                      className="shrink-0"
+                    >
+                      {d.status === "pago" ? "Pago" : "A pagar"}
+                    </Badge>
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                    <span className="tabular-nums text-gold">
+                      {formatCurrency(d.valor)}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {new Date(
+                        d.data_vencimento + "T12:00:00"
+                      ).toLocaleDateString("pt-BR")}
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-1">
+                    {d.status === "previsto" ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => markDespesaPaga(d.id)}
+                      >
+                        Pagar
+                      </Button>
+                    ) : null}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => openEditDespesa(d)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-red-400"
+                      onClick={() => removeDespesa(d.id)}
+                    >
+                      Excluir
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              {filteredDespesas.length === 0 ? (
+                <p className="py-10 text-center text-sm text-muted-foreground">
+                  Nenhuma despesa encontrada
+                </p>
+              ) : null}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden min-w-0 overflow-x-auto rounded-lg border border-border/50 md:block">
               <table className="w-full min-w-[640px] text-sm">
                 <thead>
                   <tr className="border-b border-border/50 bg-surface/50 text-left text-xs text-muted-foreground">
