@@ -32,7 +32,7 @@ export default async function PipelinePage() {
         title="Pipeline"
         subtitle="Funil de lançamentos · Captação → Pós-venda"
       />
-      <main className="flex-1 overflow-hidden p-4 lg:p-6">
+      <main className="flex-1 overflow-hidden p-3 sm:p-4 lg:p-6">
         <PipelineBoard initialLeads={leads} demoMode={demoMode} />
       </main>
     </>

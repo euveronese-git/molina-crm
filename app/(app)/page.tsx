@@ -57,7 +57,7 @@ export default async function DashboardPage() {
             : "Visão geral · Molina Transações Imobiliárias"
         }
       />
-      <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+      <main className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
         <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           <KpiCard
             label="Leads no funil"

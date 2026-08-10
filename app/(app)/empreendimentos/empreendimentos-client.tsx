@@ -294,8 +294,26 @@ export function EmpreendimentosClient({
             : "Mapa de unidades · múltiplas construtoras"
         }
       />
-      <main className="flex flex-1 overflow-hidden">
-        <aside className="w-64 shrink-0 overflow-y-auto border-r border-border/50 p-3">
+      <main className="flex flex-1 flex-col overflow-hidden lg:flex-row">
+        {/* Mobile empreendimento picker */}
+        <div className="flex shrink-0 items-center gap-2 border-b border-border/50 p-3 lg:hidden">
+          <select
+            value={selectedEmpId}
+            onChange={(e) => setSelectedEmpId(e.target.value)}
+            className="h-9 min-w-0 flex-1 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
+          >
+            {empreendimentos.map((emp) => (
+              <option key={emp.id} value={emp.id}>
+                {emp.nome}
+              </option>
+            ))}
+          </select>
+          <Button size="sm" variant="ghost" className="h-9 px-2" onClick={openCreateEmp}>
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <aside className="hidden w-64 shrink-0 overflow-y-auto border-r border-border/50 p-3 lg:block">
           <div className="mb-2 flex items-center justify-between px-2">
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
               Lançamentos
@@ -328,10 +346,10 @@ export function EmpreendimentosClient({
           </div>
         </aside>
 
-        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
+        <div className="min-w-0 flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2 className="font-serif text-xl italic text-gold-light">
+            <div className="min-w-0">
+              <h2 className="font-serif text-lg italic text-gold-light sm:text-xl">
                 {selectedEmp.nome}
               </h2>
               <p className="text-sm text-muted-foreground">
@@ -345,7 +363,7 @@ export function EmpreendimentosClient({
               <Badge variant="gold">{counts.vendido} vendidas</Badge>
               <Button size="sm" variant="outline" onClick={openEditEmp}>
                 <Pencil className="h-3.5 w-3.5" />
-                Editar
+                <span className="hidden sm:inline">Editar</span>
               </Button>
               <Button size="sm" variant="outline" onClick={removeEmp}>
                 <Trash2 className="h-3.5 w-3.5" />
@@ -431,7 +449,7 @@ export function EmpreendimentosClient({
             </SheetDescription>
           </SheetHeader>
           <div className="mt-6 space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>Andar</Label>
                 <Input

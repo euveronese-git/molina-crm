@@ -125,7 +125,7 @@ export function LeadsClient({
             : "Base de contatos · qualificação"
         }
       />
-      <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+      <main className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
         <div className="mb-4 rounded-lg border border-dashed border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-muted-foreground">
           <div className="flex items-start gap-2">
             <Bot className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
@@ -143,7 +143,7 @@ export function LeadsClient({
         </div>
 
         <div className="mb-4 flex flex-wrap items-center gap-2">
-          <div className="relative min-w-[200px] flex-1">
+          <div className="relative min-w-0 flex-1 basis-full sm:basis-auto sm:min-w-[200px]">
             <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
             <Input
               className="pl-8"
@@ -157,7 +157,7 @@ export function LeadsClient({
             onChange={(e) =>
               setStatusFilter(e.target.value as FunnelStatus | "all")
             }
-            className="h-9 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
+            className="h-9 min-w-0 flex-1 rounded-md border border-input bg-surface-deep/40 px-3 text-sm sm:flex-none"
           >
             <option value="all">Todas as etapas</option>
             {FUNNEL_STAGES.map((s) => (
@@ -171,7 +171,7 @@ export function LeadsClient({
             onChange={(e) =>
               setOrigemFilter(e.target.value as LeadOrigem | "all")
             }
-            className="h-9 rounded-md border border-input bg-surface-deep/40 px-3 text-sm"
+            className="h-9 min-w-0 flex-1 rounded-md border border-input bg-surface-deep/40 px-3 text-sm sm:flex-none"
           >
             <option value="all">Todas as origens</option>
             {(Object.keys(ORIGEM_LABELS) as LeadOrigem[]).map((k) => (
@@ -180,14 +180,63 @@ export function LeadsClient({
               </option>
             ))}
           </select>
-          <Button variant="gold" onClick={openCreate}>
+          <Button variant="gold" className="w-full sm:w-auto" onClick={openCreate}>
             <Plus className="h-4 w-4" />
             Novo Lead
           </Button>
         </div>
 
-        <div className="overflow-hidden rounded-lg border border-border/50">
-          <table className="w-full text-sm">
+        {/* Mobile cards */}
+        <div className="space-y-2 md:hidden">
+          {filtered.map((lead) => {
+            const stage = FUNNEL_STAGES.find((s) => s.id === lead.status_funil);
+            const ready =
+              lead.external_source === "whatsapp_chatbot" && !lead.bot_ativo;
+            return (
+              <button
+                key={lead.id}
+                type="button"
+                onClick={() => openEdit(lead)}
+                className="w-full rounded-lg border border-border/50 bg-card/40 p-3 text-left transition-colors hover:bg-accent/40"
+              >
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span
+                    className={cn(
+                      "font-medium",
+                      lead.is_vip && "font-serif italic text-gold-light"
+                    )}
+                  >
+                    {lead.nome}
+                  </span>
+                  {lead.is_vip ? <Badge variant="gold">VIP</Badge> : null}
+                  {lead.external_source === "whatsapp_chatbot" ? (
+                    <Bot className="h-3 w-3 text-emerald-400" />
+                  ) : null}
+                  {ready ? (
+                    <Badge variant="warning">Pronto para contato</Badge>
+                  ) : null}
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">{lead.contato}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <Badge variant="outline">{ORIGEM_LABELS[lead.origem]}</Badge>
+                  <span className="text-muted-foreground">{stage?.label}</span>
+                  <span className="tabular-nums text-gold">
+                    {formatCurrency(lead.orcamento)}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+          {filtered.length === 0 ? (
+            <p className="py-10 text-center text-sm text-muted-foreground">
+              Nenhum lead encontrado
+            </p>
+          ) : null}
+        </div>
+
+        {/* Desktop table */}
+        <div className="hidden overflow-x-auto rounded-lg border border-border/50 md:block">
+          <table className="w-full min-w-[720px] text-sm">
             <thead>
               <tr className="border-b border-border/50 bg-surface/50 text-left text-xs text-muted-foreground">
                 <th className="px-4 py-3 font-medium">Nome</th>

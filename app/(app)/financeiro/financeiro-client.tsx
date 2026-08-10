@@ -595,8 +595,8 @@ function FinanceiroContent({
               </Button>
             </div>
 
-            <div className="overflow-hidden rounded-lg border border-border/50">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto rounded-lg border border-border/50">
+              <table className="w-full min-w-[640px] text-sm">
                 <thead>
                   <tr className="border-b border-border/50 bg-surface/50 text-left text-xs text-muted-foreground">
                     <th className="px-4 py-3 font-medium">Descrição</th>
@@ -694,7 +694,7 @@ function FinanceiroContent({
               <Label>Descrição</Label>
               <Input value={fDesc} onChange={(e) => setFDesc(e.target.value)} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>Categoria</Label>
                 <select
@@ -732,7 +732,7 @@ function FinanceiroContent({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>Data</Label>
                 <Input
@@ -854,7 +854,7 @@ function FinanceiroContent({
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>Valor total</Label>
                 <Input

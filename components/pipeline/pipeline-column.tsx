@@ -24,7 +24,7 @@ export function PipelineColumn({ stage, leads, onOpenLead }: PipelineColumnProps
   return (
     <div
       className={cn(
-        "flex w-[260px] shrink-0 flex-col rounded-lg border border-border/40 bg-surface/40 transition-colors",
+        "flex w-[240px] shrink-0 flex-col rounded-lg border border-border/40 bg-surface/40 transition-colors sm:w-[260px]",
         isOver && "border-gold/35 bg-gold/[0.03]"
       )}
     >
